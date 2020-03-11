@@ -1,0 +1,61 @@
+if (isDebugApp){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion app_android.compileSdkVersion
+    buildToolsVersion app_android.buildToolsVersion
+
+    defaultConfig {
+        if (isDebugApp){
+            applicationId app_android.applicationId
+        }
+        minSdkVersion app_android.minSdkVersion
+        targetSdkVersion app_android.targetSdkVersion
+        versionCode app_android.versionCode
+        versionName  app_android.versionName
+
+        testInstrumentationRunner app_android.testInstrumentationRunner
+    }
+
+    sourceSets {
+        main {
+            if (isDebugApp) {
+                //组件化编译时为app，在对应的AndroidManifest文件中需要写android.intent.action.MAIN入口Activity
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                //集成开发模式下排除debug文件夹中的所有Java文件
+                java {
+                    //debug文件夹中放的是Application类，非组件化时不用有此类
+                    exclude 'debug/**'
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':common')
+    implementation app_dependencies.kotlin_stdlib
+    implementation app_dependencies.kotlin_reflect
+    implementation app_dependencies.appcompat
+    implementation app_dependencies.corektx
+    implementation app_dependencies.constraintlayout
+    testImplementation app_dependencies.junit
+    androidTestImplementation app_dependencies.test_ext_junit
+    androidTestImplementation app_dependencies.espressocore
+}
