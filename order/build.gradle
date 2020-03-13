@@ -20,6 +20,7 @@ android {
         versionName  app_android.versionName
 
         testInstrumentationRunner app_android.testInstrumentationRunner
+        buildConfigField("boolean", "isRelease", String.valueOf(isDebugApp))
     }
 
     sourceSets {
