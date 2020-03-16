@@ -11,6 +11,8 @@ import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
 import javax.tools.Diagnostic
+
+
 /**
  * Created by wxk on 2020/3/16.
  */
@@ -23,7 +25,8 @@ import javax.tools.Diagnostic
 @SupportedAnnotationTypes(ProcessorConfig.AROUTER_PACKAGE)
 // 注解处理器接收的参数
 @SupportedOptions(ProcessorConfig.OPTIONS, ProcessorConfig.APT_PACKAGE)
-class WRouterProcessor : AbstractProcessor(){
+
+class WRouterProcessor : AbstractProcessor() {
     // 操作Element的工具类（类，函数，属性，其实都是Element）
     private var elementTool: Elements? = null
 
@@ -48,6 +51,7 @@ class WRouterProcessor : AbstractProcessor(){
     // 仓库二 GROUP
     private val mAllGroupMap: Map<String, String> =
         HashMap()
+
     override fun init(processingEnvironment: ProcessingEnvironment?) {
         super.init(processingEnvironment)
         processingEnvironment?.let {
@@ -58,24 +62,27 @@ class WRouterProcessor : AbstractProcessor(){
 
             options = processingEnvironment.options[ProcessorConfig.OPTIONS]
             aptPackage = processingEnvironment.options[ProcessorConfig.APT_PACKAGE]
-        }
-        messager?.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>>>>>>>>>>>>>> options:$options")
-        messager?.printMessage(
-            Diagnostic.Kind.NOTE,
-            ">>>>>>>>>>>>>>>>>>>>>> aptPackage:$aptPackage"
-        )
-        if (options != null && aptPackage != null) {
-            messager?.printMessage(Diagnostic.Kind.NOTE, "APT 环境搭建完成....")
-        } else {
+            messager?.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>>>>>>>>>>>>>> options:$options")
             messager?.printMessage(
                 Diagnostic.Kind.NOTE,
-                "APT 环境有问题，请检查 options 与 aptPackage 为null..."
+                ">>>>>>>>>>>>>>>>>>>>>> aptPackage:$aptPackage"
             )
+            if (options != null && aptPackage != null) {
+                messager?.printMessage(Diagnostic.Kind.NOTE, "APT 环境搭建完成....")
+            } else {
+                messager?.printMessage(
+                    Diagnostic.Kind.NOTE,
+                    "APT 环境有问题，请检查 options 与 aptPackage 为null..."
+                )
+            }
         }
     }
 
-    override fun process(set: MutableSet<out TypeElement>?, roundEnvironment: RoundEnvironment?): Boolean {
-        if (set == null || set.isEmpty()){
+    override fun process(
+        set: MutableSet<out TypeElement>?,
+        roundEnvironment: RoundEnvironment?
+    ): Boolean {
+        if (set == null || set.isEmpty()) {
             messager?.printMessage(Diagnostic.Kind.NOTE, "并没有发现 被@ARouter注解的地方呀")
             return false
         }
