@@ -1,3 +1,6 @@
 rootProject.name='ComponentApp'
 include ':app',':common',':order'
 include ':personal'
+include ':wrouter_annotation'
+include ':wrouter_complier'
+include ':wrouter_api'
