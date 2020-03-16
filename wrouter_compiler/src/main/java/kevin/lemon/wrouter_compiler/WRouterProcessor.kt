@@ -112,7 +112,6 @@ class WRouterProcessor : AbstractProcessor() {
                 Diagnostic.Kind.NOTE,
                 "被@ARetuer注解的类有：$className"
             ) // 打印出 就证明APT没有问题
-
         }
         return true
     }
