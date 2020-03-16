@@ -1,8 +1,9 @@
-package kevin.lemon.wrouter_complier
+package kevin.lemon.wrouter_compiler
 
+import com.google.auto.service.AutoService
 import kevin.lemon.wrouter_annotation.WRouter
 import kevin.lemon.wrouter_annotation.bean.RouterBean
-import kevin.lemon.wrouter_complier.utils.ProcessorConfig
+import kevin.lemon.wrouter_compiler.utils.ProcessorConfig
 import java.util.*
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -20,6 +21,7 @@ import javax.tools.Diagnostic
 // 通过auto-service中的@AutoService可以自动生成AutoService注解处理器，用来注册
 // 用来生成 META-INF/services/javax.annotation.processing.Processor 文件
 // 指定JDK编译版本
+@AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 // 允许/支持的注解类型，让注解处理器处理
 @SupportedAnnotationTypes(ProcessorConfig.AROUTER_PACKAGE)

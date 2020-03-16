@@ -6,7 +6,6 @@ if (isDebugApp){
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion app_android.compileSdkVersion
     buildToolsVersion app_android.buildToolsVersion
@@ -68,11 +67,9 @@ dependencies {
     testImplementation app_dependencies.junit
     androidTestImplementation app_dependencies.test_ext_junit
     androidTestImplementation app_dependencies.espressocore
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
     // 注解模块
     implementation project(":wrouter_annotation")
 
     // 注解处理器
-    kapt project(':processor')
+    kapt project(':wrouter_compiler')
 }
