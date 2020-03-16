@@ -1,11 +1,11 @@
+apply plugin: 'java'
 apply plugin: 'kotlin'
-
+apply plugin: 'kotlin-kapt'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // As-3.4.1  +  gradle-5.1.1-all + auto-service:1.0-rc4
-    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
-    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    kapt 'com.google.auto.service:auto-service:1.0-rc6'
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
     implementation 'com.squareup:kotlinpoet:1.5.0'
     // 引入annotation，处理@ARouter注解
     implementation project(':wrouter_annotation')
@@ -14,5 +14,5 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
-sourceCompatibility = "7"
-targetCompatibility = "7"
+sourceCompatibility = "8"
+targetCompatibility = "8"
