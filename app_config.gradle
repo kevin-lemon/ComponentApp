@@ -16,7 +16,7 @@ ext{
     ]
 
     class_path = [
-            "gradle" : "com.android.tools.build:gradle:3.6.0",
+            "gradle" : "com.android.tools.build:gradle:3.6.1",
             "kotlin_gradle_plugin" : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     ]
 
