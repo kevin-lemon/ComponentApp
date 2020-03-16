@@ -6,7 +6,9 @@ import android.view.View
 import kevin.lemon.common.base.BaseActivity
 import kevin.lemon.order.OrderMainActivity
 import kevin.lemon.personal.PersonalMainActivity
+import kevin.lemon.wrouter_annotation.WRouter
 
+@WRouter("/app/MainActivity")
 class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

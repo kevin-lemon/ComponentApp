@@ -1,4 +1,4 @@
-package kevin.lemon.wrouter_api.bean
+package kevin.lemon.wrouter_annotation.bean
 
 import javax.lang.model.element.Element
 
@@ -84,16 +84,21 @@ class RouterBean {
         path: String,
         group: String
     ): RouterBean? {
-        return RouterBean(type, clazz, path, group)
+        return RouterBean(
+            type,
+            clazz,
+            path,
+            group
+        )
     }
 
     // 构建者模式相关
     constructor(builder: Builder) {
-        typeEnum = builder.type
-        element = builder.element
-        myClass = builder.clazz
-        path = builder.path
-        group = builder.group
+        typeEnum = Builder.type
+        element = Builder.element
+        myClass = Builder.clazz
+        path = Builder.path
+        group = Builder.group
     }
 
     /**
@@ -115,27 +120,27 @@ class RouterBean {
         // 路由组
         var group: String? = null
         fun addType(type: TypeEnum): Builder {
-            this.type = type
+            Builder.type = type
             return this
         }
 
         fun addElement(element: Element): Builder {
-            this.element = element
+            Builder.element = element
             return this
         }
 
         fun addClazz(clazz: Class<*>): Builder {
-            this.clazz = clazz
+            Builder.clazz = clazz
             return this
         }
 
         fun addPath(path: String): Builder {
-            this.path = path
+            Builder.path = path
             return this
         }
 
         fun addGroup(group: String): Builder {
-            this.group = group
+            Builder.group = group
             return this
         }
 

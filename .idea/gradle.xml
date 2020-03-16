@@ -16,7 +16,7 @@
             <option value="$PROJECT_DIR$/personal" />
             <option value="$PROJECT_DIR$/wrouter_annotation" />
             <option value="$PROJECT_DIR$/wrouter_api" />
-            <option value="$PROJECT_DIR$/wrouter_complier" />
+            <option value="$PROJECT_DIR$/wrouter_compiler" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

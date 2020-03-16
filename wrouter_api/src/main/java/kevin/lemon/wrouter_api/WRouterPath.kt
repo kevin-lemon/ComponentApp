@@ -1,6 +1,6 @@
 package kevin.lemon.wrouter_api
 
-import kevin.lemon.wrouter_api.bean.RouterBean
+import kevin.lemon.wrouter_annotation.bean.RouterBean
 
 /**
  * Created by wxk on 2020/3/16.

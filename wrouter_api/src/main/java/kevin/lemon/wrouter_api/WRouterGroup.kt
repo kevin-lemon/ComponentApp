@@ -10,5 +10,5 @@ interface WRouterGroup {
      *
      * @return  key:"order"   value:系列的order组下面所有的（path---class）
      */
-    fun getGroupMap(): Map<String, Class<out ARouterPath>>
+    fun getGroupMap(): Map<String, Class<out WRouterPath>>
 }

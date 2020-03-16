@@ -5,7 +5,7 @@ if (isDebugApp){
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion app_android.compileSdkVersion
     buildToolsVersion app_android.buildToolsVersion
@@ -21,6 +21,12 @@ android {
 
         testInstrumentationRunner app_android.testInstrumentationRunner
         buildConfigField("boolean", "isRelease", String.valueOf(isDebugApp))
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName(), packageNameForAPT: packageNameForAPT]
+            }
+        }
     }
 
     sourceSets {
@@ -58,4 +64,10 @@ dependencies {
     testImplementation app_dependencies.junit
     androidTestImplementation app_dependencies.test_ext_junit
     androidTestImplementation app_dependencies.espressocore
+
+    // 注解模块
+    implementation project(":wrouter_annotation")
+
+    // 注解处理器
+    kapt project(':wrouter_compiler')
 }

@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kevin.lemon.common.base.BaseActivity
+import kevin.lemon.wrouter_annotation.WRouter
 
+@WRouter("/Personal/PersonalMainActivity")
 class PersonalMainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
