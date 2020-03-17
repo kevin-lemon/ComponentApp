@@ -94,17 +94,17 @@ class RouterBean {
 
     // 构建者模式相关
     constructor(builder: Builder) {
-        typeEnum = Builder.type
-        element = Builder.element
-        myClass = Builder.clazz
-        path = Builder.path
-        group = Builder.group
+        typeEnum = builder.type
+        element = builder.element
+        myClass = builder.clazz
+        path = builder.path
+        group = builder.group
     }
 
     /**
      * 构建者模式
      */
-    object Builder {
+    class Builder {
         // 枚举类型：Activity
         var type: TypeEnum? = null
 
@@ -120,27 +120,27 @@ class RouterBean {
         // 路由组
         var group: String? = null
         fun addType(type: TypeEnum): Builder {
-            Builder.type = type
+            this.type = type
             return this
         }
 
         fun addElement(element: Element): Builder {
-            Builder.element = element
+            this.element = element
             return this
         }
 
         fun addClazz(clazz: Class<*>): Builder {
-            Builder.clazz = clazz
+            this.clazz = clazz
             return this
         }
 
         fun addPath(path: String): Builder {
-            Builder.path = path
+            this.path = path
             return this
         }
 
         fun addGroup(group: String): Builder {
-            Builder.group = group
+            this.group = group
             return this
         }
 
@@ -149,6 +149,7 @@ class RouterBean {
             require(!(path == null || path!!.length == 0)) { "path必填项为空，如：/app/MainActivity" }
             return RouterBean(this)
         }
+
     }
 
     override fun toString(): String {

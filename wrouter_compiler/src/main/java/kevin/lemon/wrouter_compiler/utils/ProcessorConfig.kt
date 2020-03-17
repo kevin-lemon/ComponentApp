@@ -6,7 +6,7 @@ package kevin.lemon.wrouter_compiler.utils
 interface ProcessorConfig {
     companion object {
         // Activity全类名
-        const val ACTIVITY_PACKAGE = "androidx.activity"
+        const val ACTIVITY_PACKAGE = "androidx.activity.ComponentActivity"
 
         // @ARouter注解 的 包名 + 类名
         const val AROUTER_PACKAGE = "kevin.lemon.wrouter_annotation.WRouter"
@@ -19,12 +19,10 @@ interface ProcessorConfig {
         const val WROUTER_API_PACKAGE = "kevin.lemon.wrouter_api"
 
         // ARouter api 的 ARouterGroup 高层标准
-        const val AROUTER_API_GROUP =
-            "$WROUTER_API_PACKAGE.WRouterGroup"
+        const val AROUTER_API_GROUP = "$WROUTER_API_PACKAGE.WRouterGroup"
 
         // ARouter api 的 ARouterPath 高层标准
-        const val AROUTER_API_PATH =
-            "$WROUTER_API_PACKAGE.WRouterPath"
+        const val AROUTER_API_PATH = "$WROUTER_API_PACKAGE.WRouterPath"
 
         // 路由组，中的 Path 里面的 方法名
         const val PATH_METHOD_NAME = "getPathMap"
