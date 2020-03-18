@@ -33,16 +33,16 @@ import javax.tools.Diagnostic
 
 class WRouterProcessor : AbstractProcessor() {
     // 操作Element的工具类（类，函数，属性，其实都是Element）
-    private var elementTool: Elements? = null
+    lateinit var elementTool: Elements
 
     // type(类信息)的工具类，包含用于操作TypeMirror的工具方法
-    private var typeTool: Types? = null
+    lateinit var typeTool: Types
 
     // Message用来打印 日志相关信息
-    private var messager: Messager? = null
+    lateinit var messager: Messager
 
     // 文件生成器， 类 资源 等，就是最终要生成的文件 是需要Filer来完成的
-    private var filer: Filer? = null
+    lateinit var filer: Filer
 
     private var options // （模块传递过来的）模块名  app，personal
             : String? = null
@@ -66,15 +66,15 @@ class WRouterProcessor : AbstractProcessor() {
 
         options = processingEnvironment.options[ProcessorConfig.OPTIONS]
         aptPackage = processingEnvironment.options[ProcessorConfig.APT_PACKAGE]
-        messager?.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>>>>>>>>>>>>>> options:$options")
-        messager?.printMessage(
+        messager.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>>>>>>>>>>>>>> options:$options")
+        messager.printMessage(
             Diagnostic.Kind.NOTE,
             ">>>>>>>>>>>>>>>>>>>>>> aptPackage:$aptPackage"
         )
         if (options != null && aptPackage != null) {
-            messager?.printMessage(Diagnostic.Kind.NOTE, "APT 环境搭建完成....")
+            messager.printMessage(Diagnostic.Kind.NOTE, "APT 环境搭建完成....")
         } else {
-            messager?.printMessage(
+            messager.printMessage(
                 Diagnostic.Kind.NOTE,
                 "APT 环境有问题，请检查 options 与 aptPackage 为null..."
             )
@@ -85,17 +85,17 @@ class WRouterProcessor : AbstractProcessor() {
         set: MutableSet<out TypeElement>?,
         roundEnvironment: RoundEnvironment?
     ): Boolean {
-        messager!!.printMessage(
+        messager.printMessage(
             Diagnostic.Kind.NOTE,
             "start process"
         )
         if (set == null || set.isEmpty()) {
-            messager?.printMessage(Diagnostic.Kind.NOTE, "并没有发现 被@ARouter注解的地方呀")
+            messager.printMessage(Diagnostic.Kind.NOTE, "并没有发现 被@ARouter注解的地方呀")
             return false
         }
         // Activity type
-        val activityType = elementTool!!.getTypeElement(ProcessorConfig.ACTIVITY_PACKAGE)
-        val activityMirror = activityType!!.asType()
+        val activityType = elementTool.getTypeElement(ProcessorConfig.ACTIVITY_PACKAGE)
+        val activityMirror = activityType.asType()
         // 获取所有被 @ARouter 注解的 元素集合
 
         // 获取所有被 @ARouter 注解的 元素集合
@@ -108,7 +108,7 @@ class WRouterProcessor : AbstractProcessor() {
             // String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();
             // 获取简单类名，例如：MainActivity
             val className: String = it?.simpleName.toString()
-            messager?.printMessage(
+            messager.printMessage(
                 Diagnostic.Kind.NOTE,
                 "被@ARetuer注解的类有：$className"
             ) // 打印出 就证明APT没有问题
@@ -129,7 +129,7 @@ class WRouterProcessor : AbstractProcessor() {
             // 必须是Activity
             val elementMirror: TypeMirror = it.asType() // 当前 == Activity
 
-            if (typeTool!!.isSubtype(elementMirror, activityMirror)) {
+            if (typeTool.isSubtype(elementMirror, activityMirror)) {
                 routerBean.setTypeEnum(RouterBean.TypeEnum.ACTIVITY)
             } else {
                 // 不匹配抛出异常，这里谨慎使用！考虑维护问题
@@ -139,7 +139,7 @@ class WRouterProcessor : AbstractProcessor() {
 
             // 校验 path  group  用户传递过来的
             if (checkRouterPath(routerBean)) {
-                messager?.printMessage(
+                messager.printMessage(
                     Diagnostic.Kind.NOTE,
                     "RouterBean Check Success:$routerBean"
                 )
@@ -159,14 +159,14 @@ class WRouterProcessor : AbstractProcessor() {
                     }
                 }
             } else {
-                messager?.printMessage(
+                messager.printMessage(
                     Diagnostic.Kind.ERROR,
                     "@ARouter注解未按规范配置，如：/app/MainActivity"
                 )
             }
 
             // 定义（拿到标准 TYPE） PATH  GROUP
-            elementTool?.let { elementTool ->
+            elementTool.let { elementTool ->
                 val pathType = elementTool.getTypeElement(ProcessorConfig.AROUTER_API_PATH)
                 val groupType = elementTool.getTypeElement(ProcessorConfig.AROUTER_API_GROUP)
                 createPathFile(pathType)
@@ -188,7 +188,7 @@ class WRouterProcessor : AbstractProcessor() {
         // @ARouter注解中的path值，必须要以 / 开头（模仿阿里Arouter规范）
         if (path.isNullOrEmpty() || !path.startsWith("/")) {
             // ERROR 故意去奔溃的
-            messager?.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解中的path值，必须要以 / 开头")
+            messager.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解中的path值，必须要以 / 开头")
             return false
         }
 
@@ -197,7 +197,7 @@ class WRouterProcessor : AbstractProcessor() {
         // 比如开发者代码为：path = "/MainActivity"，最后一个 / 符号必然在字符串第1位
         if (path.lastIndexOf("/") == 0) {
             // 架构师定义规范，让开发者遵循
-            messager?.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解未按规范配置，如：/app/MainActivity")
+            messager.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解未按规范配置，如：/app/MainActivity")
             return false
         }
 
@@ -213,7 +213,7 @@ class WRouterProcessor : AbstractProcessor() {
         // @ARouter注解中的group有赋值情况   用户传递进来时 order，  我截取出来的也必须是 order
         if (!group.isNullOrEmpty() && group != options) {
             // 架构师定义规范，让开发者遵循
-            messager?.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解中的group值必须和子模块名一致！")
+            messager.printMessage(Diagnostic.Kind.ERROR, "@ARouter注解中的group值必须和子模块名一致！")
             return false
         } else {
             routerBean.setGroup(finalGroup) // 赋值  order 添加进去了
@@ -230,7 +230,7 @@ class WRouterProcessor : AbstractProcessor() {
         // Map<String, RouterBean>  返回值
         try {
         } catch (e: IOException) {
-            messager?.printMessage(Diagnostic.Kind.ERROR, e.message)
+            messager.printMessage(Diagnostic.Kind.ERROR, e.message)
         }
     }
 
@@ -238,7 +238,7 @@ class WRouterProcessor : AbstractProcessor() {
         try {
 
         } catch (e: IOException) {
-            messager?.printMessage(Diagnostic.Kind.ERROR, e.message)
+            messager.printMessage(Diagnostic.Kind.ERROR, e.message)
         }
     }
 
