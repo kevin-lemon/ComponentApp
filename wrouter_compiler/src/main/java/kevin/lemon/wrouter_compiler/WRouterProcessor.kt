@@ -85,6 +85,10 @@ class WRouterProcessor : AbstractProcessor() {
         set: MutableSet<out TypeElement>?,
         roundEnvironment: RoundEnvironment?
     ): Boolean {
+        messager!!.printMessage(
+            Diagnostic.Kind.NOTE,
+            "start process"
+        )
         if (set == null || set.isEmpty()) {
             messager?.printMessage(Diagnostic.Kind.NOTE, "并没有发现 被@ARouter注解的地方呀")
             return false
@@ -135,7 +139,7 @@ class WRouterProcessor : AbstractProcessor() {
 
             // 校验 path  group  用户传递过来的
             if (checkRouterPath(routerBean)) {
-                messager!!.printMessage(
+                messager?.printMessage(
                     Diagnostic.Kind.NOTE,
                     "RouterBean Check Success:$routerBean"
                 )

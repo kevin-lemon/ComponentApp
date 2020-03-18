@@ -33,4 +33,5 @@ dependencies {
     testImplementation app_dependencies.junit
     androidTestImplementation app_dependencies.test_ext_junit
     androidTestImplementation app_dependencies.espressocore
+    api project(":wrouter_api")
 }
