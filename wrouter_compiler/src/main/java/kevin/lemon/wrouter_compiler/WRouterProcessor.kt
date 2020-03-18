@@ -180,7 +180,7 @@ class WRouterProcessor : AbstractProcessor() {
         val group: String? = routerBean.getGroup()
 
         val path: String? =
-            routerBean.getPath() //  同学们，一定要记住： "/app/MainActivity"   "/order/Order_MainActivity"   "/personal/Personal_MainActivity"
+            routerBean.getPath() //"/app/MainActivity"   "/order/Order_MainActivity"   "/personal/Personal_MainActivity"
 
 
         // @ARouter注解中的path值，必须要以 / 开头（模仿阿里Arouter规范）
